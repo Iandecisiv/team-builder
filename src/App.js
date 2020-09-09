@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import TeamMember from './TeamMember';
+import TeamMemberList from './TeamMemberList';
 import TeamMemberInput from './TeamMemberInput';
 
 const teamList = [
@@ -12,24 +13,21 @@ const teamList = [
 function App() {
   const [teamListState, setTeamListState] = useState(teamList);
 
-  const updateList = () => {
-    var teamListPlaceHolder = teamList;
-    teamListPlaceHolder.push({name:'kid', email: 'kiddo', role: 'kiddo 2'})
-    setTeamListState(teamListPlaceHolder);
-    console.log(teamListState);
+  const updateList = (formData) => {
+    const newTeamMember = {
+      name: formData.name,
+      email: formData.email,
+      role: formData.role
+    };
+     setTeamListState([...teamListState, newTeamMember]);
           };
           
 
   return (
     <div className="App">
-     {
-     teamListState.map(function(teamMember, index){
-       return <TeamMember key={index} name={teamMember.name} email={teamMember.email} role={teamMember.role}/>
-     }
-      )
-}
+      <TeamMemberList teamListState={teamListState} />
 
-      <TeamMemberInput addTeamMember={updateList}/>
+       <TeamMemberInput addTeamMember={updateList}/>
     </div>
   );
 }
